@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PXL Sweeper</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2376351f'/%3E%3Cpath d='M20 44V18l24 14-24 12Z' fill='%23fff4e0'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" data-game-root>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Mine Survey Ledger</p>
+          <h1 id="game-title">PXL Sweeper</h1>
+        </div>
+        <p class="description">
+          Clear the field without tripping a charge. Reveal safe ground, mark suspicious cells,
+          and keep the board under control.
+        </p>
+      </section>
+
+      <section class="dashboard">
+        <div class="dashboard-card">
+          <p class="status-label">Board state</p>
+          <p class="state-badge" data-state-badge>ready</p>
+          <p class="status-copy" data-status-copy role="status" aria-live="polite">
+            Survey the field. Left click reveals a tile. Right click marks a charge.
+          </p>
+        </div>
+
+        <div class="dashboard-card metrics">
+          <div>
+            <p class="status-label">Charges left</p>
+            <p class="metric-value" data-remaining-mines aria-live="polite">10</p>
+          </div>
+          <div>
+            <p class="status-label">Safe tiles left</p>
+            <p class="metric-value" data-hidden-safe-tiles aria-live="polite">71</p>
+          </div>
+          <button class="reset-button" type="button" data-reset>Reset Survey</button>
+        </div>
+      </section>
+
+      <section class="board-frame" data-board-frame data-status="ready">
+        <div class="board-header">
+          <p class="status-label">Survey grid</p>
+          <p class="board-note" id="board-instructions">
+            Primary click reveals. Secondary click flags. Reset starts a fresh board.
+          </p>
+        </div>
+        <div
+          class="board"
+          data-board
+          aria-label="PXL Sweeper board"
+          aria-labelledby="game-title"
+          aria-describedby="board-instructions"
+        ></div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
