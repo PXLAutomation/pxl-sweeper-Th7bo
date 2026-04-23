@@ -2,10 +2,6 @@
 
 A classic Minesweeper clone with a pixel-art theme, built with React + TypeScript + Vite.
 
-## Play
-
-Deployed at: `https://<username>.github.io/pxl-sweeper-Th7bo/`
-
 ## Controls
 
 ### Mouse
@@ -41,12 +37,6 @@ npm test -- --run    # run tests once
 npm run typecheck    # tsc --noEmit
 npm run lint         # eslint
 ```
-
-## Deployment
-
-The site deploys automatically to GitHub Pages via the `.github/workflows/deploy.yml` workflow on every push to `main`.
-
-**One-time setup:** In the repository settings, go to **Pages** and set the source to **GitHub Actions**.
 
 ## Difficulties
 
