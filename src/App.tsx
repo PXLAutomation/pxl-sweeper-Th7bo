@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useGame } from './state/useGame';
 import { Board } from './components/Board';
 import { HUD } from './components/HUD';
+import './styles/theme.css';
 import './styles/base.css';
 
 export function App() {

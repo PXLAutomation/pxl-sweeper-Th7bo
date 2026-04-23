@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* --- Background --- */
+  --bg-page: #12121a;
+  --bg-app: #1a1a26;
+
+  /* --- Board frame --- */
+  --frame-bg: #2e2e40;
+  --frame-light: #4a4a62;
+  --frame-dark: #1a1a28;
+
+  /* --- Cells: hidden --- */
+  --cell-hidden: #7a7a94;
+  --cell-hidden-light: #9e9eb4;
+  --cell-hidden-dark: #52526a;
+
+  /* --- Cells: revealed --- */
+  --cell-revealed: #c8c8d4;
+  --cell-revealed-border: #aaaab6;
+
+  /* --- State colors --- */
+  --color-flag: #e83838;
+  --color-mine: #222;
+  --color-exploded-bg: #e02020;
+  --color-wrong: #ff5c40;
+  --color-focus: #ffc800;
+
+  /* --- Numbers 1-8 --- */
+  --num-1: #5599ff;
+  --num-2: #44cc44;
+  --num-3: #ee4444;
+  --num-4: #3355bb;
+  --num-5: #bb3333;
+  --num-6: #33bbbb;
+  --num-7: #444;
+  --num-8: #999;
+
+  /* --- HUD --- */
+  --hud-bg: #16161e;
+  --hud-border: #333348;
+  --led-on: #33ff33;
+  --led-bg: #0a0a14;
+  --led-panel-border-light: #222;
+  --led-panel-border-dark: #0a0a0e;
+
+  /* --- Buttons --- */
+  --btn-bg: #333348;
+  --btn-light: #4a4a62;
+  --btn-dark: #1e1e2e;
+  --btn-text: #c0c0d0;
+  --btn-active-bg: #5858cc;
+  --btn-active-text: #fff;
+  --btn-hover-bg: #3e3e56;
+
+  /* --- Typography --- */
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--btn-text);
+}
