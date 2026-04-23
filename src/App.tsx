@@ -1,27 +1,30 @@
-import { DIFFICULTY_ORDER } from './engine/difficulty';
 import { useGame } from './state/useGame';
+import { Board } from './components/Board';
+import { HUD } from './components/HUD';
+import './styles/base.css';
 
 export function App() {
   const game = useGame('beginner');
+
   return (
-    <main>
+    <main className="app">
       <h1>PXL Sweeper</h1>
-      <section aria-label="status">
-        <p data-testid="status-difficulty">Difficulty: {game.difficulty}</p>
-        <p data-testid="status-state">Status: {game.status}</p>
-        <p data-testid="status-mines">Mines remaining: {game.minesRemaining}</p>
-        <p data-testid="status-timer">Time: {game.elapsedSeconds}s</p>
-      </section>
-      <section aria-label="controls">
-        <button type="button" onClick={() => game.newGame(game.difficulty)}>
-          New game
-        </button>
-        {DIFFICULTY_ORDER.map((d) => (
-          <button key={d} type="button" onClick={() => game.selectDifficulty(d)}>
-            {d}
-          </button>
-        ))}
-      </section>
+      <HUD
+        minesRemaining={game.minesRemaining}
+        elapsedSeconds={game.elapsedSeconds}
+        status={game.status}
+        difficulty={game.difficulty}
+        onNewGame={() => game.newGame(game.difficulty)}
+        onSelectDifficulty={game.selectDifficulty}
+      />
+      <Board
+        board={game.board}
+        status={game.status}
+        explodedAt={game.explodedAt}
+        onReveal={game.reveal}
+        onToggleFlag={game.toggleFlag}
+        onChord={game.chord}
+      />
     </main>
   );
 }
