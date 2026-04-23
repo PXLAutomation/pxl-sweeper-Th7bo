@@ -13,52 +13,67 @@
   <body>
     <main class="app-shell" data-game-root>
       <section class="hero">
-        <div>
-          <p class="eyebrow">Mine Survey Ledger</p>
-          <h1 id="game-title">PXL Sweeper</h1>
-        </div>
-        <p class="description">
-          Clear the field without tripping a charge. Reveal safe ground, mark suspicious cells,
-          and keep the board under control.
-        </p>
-      </section>
-
-      <section class="dashboard">
-        <div class="dashboard-card">
-          <p class="status-label">Board state</p>
-          <p class="state-badge" data-state-badge>ready</p>
-          <p class="status-copy" data-status-copy role="status" aria-live="polite">
-            Survey the field. Left click reveals a tile. Right click marks a charge.
+        <div class="hero-copy">
+          <p class="eyebrow">Arcade Field Console</p>
+          <h1 id="game-title">PXL SWEEPER</h1>
+          <p class="description">
+            Strip the board down to the safe cells. Reveal fast, flag precisely, and do not give
+            the mines a free move.
           </p>
         </div>
 
-        <div class="dashboard-card metrics">
-          <div>
+        <div class="status-console">
+          <p class="status-label">Live state</p>
+          <p class="state-badge" data-state-badge>ready</p>
+          <p class="status-copy" data-status-copy role="status" aria-live="polite">
+            Reveal with the main click. Flag suspects with the secondary click.
+          </p>
+        </div>
+      </section>
+
+      <section class="control-strip">
+        <div class="metric-cluster">
+          <article class="metric-card">
             <p class="status-label">Charges left</p>
             <p class="metric-value" data-remaining-mines aria-live="polite">10</p>
-          </div>
-          <div>
+          </article>
+
+          <article class="metric-card">
             <p class="status-label">Safe tiles left</p>
             <p class="metric-value" data-hidden-safe-tiles aria-live="polite">71</p>
+          </article>
+        </div>
+
+        <div class="command-panel">
+          <div class="legend">
+            <span class="legend-chip"><i class="chip-swatch hidden"></i> Hidden</span>
+            <span class="legend-chip"><i class="chip-swatch flagged"></i> Flagged</span>
+            <span class="legend-chip"><i class="chip-swatch mine"></i> Mine</span>
           </div>
-          <button class="reset-button" type="button" data-reset>Reset Survey</button>
+          <button class="reset-button" type="button" data-reset>New Round</button>
         </div>
       </section>
 
       <section class="board-frame" data-board-frame data-status="ready">
         <div class="board-header">
-          <p class="status-label">Survey grid</p>
+          <div>
+            <p class="status-label">Grid</p>
+            <p class="board-title">Board Control</p>
+          </div>
           <p class="board-note" id="board-instructions">
-            Primary click reveals. Secondary click flags. Reset starts a fresh board.
+            Primary click reveals. Secondary click flags. New Round resets the board.
           </p>
         </div>
-        <div
-          class="board"
-          data-board
-          aria-label="PXL Sweeper board"
-          aria-labelledby="game-title"
-          aria-describedby="board-instructions"
-        ></div>
+
+        <div class="board-stage">
+          <div
+            class="board"
+            data-board
+            aria-label="PXL Sweeper board"
+            aria-labelledby="game-title"
+            aria-describedby="board-instructions"
+          ></div>
+        </div>
       </section>
     </main>
 

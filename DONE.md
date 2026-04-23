@@ -53,3 +53,11 @@
 - Verified `npm test` passes after the deployment changes.
 - Verified `npm run build` produces `dist/index.html`, `dist/src/`, and `dist/.nojekyll`.
 - Verified the built `dist/` site renders correctly in headless Chrome when served locally from the preview command.
+
+## Post-plan UI refresh
+
+- Reworked [index.html](/home/th7bo/pxl-codex/index.html) into a sharper arcade-console layout with a stronger hero, cleaner metric strip, legend, and more focused board framing.
+- Replaced the previous visual system in [src/styles.css](/home/th7bo/pxl-codex/src/styles.css) with a darker high-contrast control-panel theme, clearer tile hierarchy, and lightweight motion on load and board scan.
+- Kept gameplay logic unchanged while preserving the existing UI data hooks and accessibility wiring.
+- Verified `npm test` still passes across all automated suites.
+- Verified the refreshed UI renders correctly in headless Chrome after JavaScript execution.
