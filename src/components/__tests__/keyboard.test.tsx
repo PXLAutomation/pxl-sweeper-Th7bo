@@ -1,5 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { App } from '../../App';
+import { MemoryRouter } from 'react-router-dom';
+import { GamePage } from '../../pages/GamePage';
+
+function renderGame() {
+  return render(
+    <MemoryRouter>
+      <GamePage />
+    </MemoryRouter>,
+  );
+}
 
 beforeEach(() => {
   localStorage.clear();
@@ -27,7 +36,7 @@ function pressKey(key: string) {
 
 describe('Keyboard: arrow navigation', () => {
   it('moves focus down with ArrowDown', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     const initial = focusedCell();
@@ -41,7 +50,7 @@ describe('Keyboard: arrow navigation', () => {
   });
 
   it('moves focus up with ArrowUp', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     pressKey('ArrowDown');
@@ -57,7 +66,7 @@ describe('Keyboard: arrow navigation', () => {
   });
 
   it('moves focus right with ArrowRight', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     const initial = focusedCell();
@@ -70,7 +79,7 @@ describe('Keyboard: arrow navigation', () => {
   });
 
   it('moves focus left with ArrowLeft', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     pressKey('ArrowRight');
@@ -86,7 +95,7 @@ describe('Keyboard: arrow navigation', () => {
   });
 
   it('clamps focus at grid boundaries', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     for (let i = 0; i < 20; i++) pressKey('ArrowUp');
@@ -109,7 +118,7 @@ describe('Keyboard: arrow navigation', () => {
 
 describe('Keyboard: reveal, flag, chord', () => {
   it('Enter reveals the focused cell', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     const fc = focusedCell()!;
@@ -121,7 +130,7 @@ describe('Keyboard: reveal, flag, chord', () => {
   });
 
   it('Space reveals the focused cell', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     const fc = focusedCell()!;
@@ -133,7 +142,7 @@ describe('Keyboard: reveal, flag, chord', () => {
   });
 
   it('F flags the focused cell', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     for (let i = 0; i < 10; i++) pressKey('ArrowUp');
@@ -147,7 +156,7 @@ describe('Keyboard: reveal, flag, chord', () => {
   });
 
   it('F unflags a flagged cell', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     for (let i = 0; i < 10; i++) pressKey('ArrowUp');
@@ -161,7 +170,7 @@ describe('Keyboard: reveal, flag, chord', () => {
   });
 
   it('C dispatches chord on the focused cell (no-op on hidden)', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     const fc = focusedCell()!;
@@ -179,7 +188,7 @@ describe('Keyboard: reveal, flag, chord', () => {
 
 describe('Keyboard: global shortcuts', () => {
   it('N starts a new game, resetting all cells', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     pressKey('Enter');
@@ -194,7 +203,7 @@ describe('Keyboard: global shortcuts', () => {
   });
 
   it('1 switches to Beginner and resets', () => {
-    render(<App />);
+    renderGame();
 
     fireEvent.keyDown(document, { key: '2' });
     expect(screen.getAllByTestId(/^cell-/)).toHaveLength(256);
@@ -204,14 +213,14 @@ describe('Keyboard: global shortcuts', () => {
   });
 
   it('2 switches to Intermediate', () => {
-    render(<App />);
+    renderGame();
 
     fireEvent.keyDown(document, { key: '2' });
     expect(screen.getAllByTestId(/^cell-/)).toHaveLength(256);
   });
 
   it('3 switches to Expert', () => {
-    render(<App />);
+    renderGame();
 
     fireEvent.keyDown(document, { key: '3' });
     expect(screen.getAllByTestId(/^cell-/)).toHaveLength(480);
@@ -224,13 +233,13 @@ describe('Keyboard: global shortcuts', () => {
 
 describe('Keyboard: focus indicator', () => {
   it('exactly one cell has data-focused at any time', () => {
-    render(<App />);
+    renderGame();
     const focused = screen.getByRole('grid').querySelectorAll('[data-focused="true"]');
     expect(focused).toHaveLength(1);
   });
 
   it('focus indicator follows arrow key movement', () => {
-    render(<App />);
+    renderGame();
     focusBoard();
 
     const first = focusedCell()!;
@@ -245,7 +254,7 @@ describe('Keyboard: focus indicator', () => {
   });
 
   it('board has tabIndex 0 for keyboard accessibility', () => {
-    render(<App />);
+    renderGame();
     expect(getBoard()).toHaveAttribute('tabindex', '0');
   });
 });

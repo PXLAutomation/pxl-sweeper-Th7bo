@@ -1,9 +1,18 @@
 import { createRef } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { App } from '../../App';
+import { MemoryRouter } from 'react-router-dom';
+import { GamePage } from '../../pages/GamePage';
 import { Board } from '../Board';
 import type { Board as BoardType, Cell } from '../../engine/types';
+
+function renderGame() {
+  return render(
+    <MemoryRouter>
+      <GamePage />
+    </MemoryRouter>,
+  );
+}
 
 beforeEach(() => {
   localStorage.clear();
@@ -42,18 +51,18 @@ function makeBoardData(
 
 describe('App integration: grid sizes', () => {
   it('renders 81 cells for Beginner', () => {
-    render(<App />);
+    renderGame();
     expect(getCells()).toHaveLength(81);
   });
 
   it('renders 256 cells for Intermediate', async () => {
-    render(<App />);
+    renderGame();
     await userEvent.click(screen.getByTestId('difficulty-intermediate'));
     expect(getCells()).toHaveLength(256);
   });
 
   it('renders 480 cells for Expert', async () => {
-    render(<App />);
+    renderGame();
     await userEvent.click(screen.getByTestId('difficulty-expert'));
     expect(getCells()).toHaveLength(480);
   });
@@ -61,7 +70,7 @@ describe('App integration: grid sizes', () => {
 
 describe('App integration: mouse actions', () => {
   it('left-click reveals a hidden cell', () => {
-    render(<App />);
+    renderGame();
     const cell = screen.getByTestId('cell-4-4');
     expect(cell).toHaveAttribute('data-state', 'hidden');
 
@@ -72,7 +81,7 @@ describe('App integration: mouse actions', () => {
   });
 
   it('right-click toggles flag on a hidden cell without revealing', () => {
-    render(<App />);
+    renderGame();
     const cell = screen.getByTestId('cell-0-0');
     expect(cell).toHaveAttribute('data-state', 'hidden');
 
@@ -83,7 +92,7 @@ describe('App integration: mouse actions', () => {
   });
 
   it('right-clicking a flagged cell unflags it', () => {
-    render(<App />);
+    renderGame();
     const cell = screen.getByTestId('cell-0-0');
 
     fireEvent.mouseDown(cell, { button: 2, buttons: 2 });
@@ -96,7 +105,7 @@ describe('App integration: mouse actions', () => {
   });
 
   it('mine counter decrements when a cell is flagged', () => {
-    render(<App />);
+    renderGame();
     expect(screen.getByTestId('mine-counter')).toHaveTextContent('10');
 
     const cell = screen.getByTestId('cell-0-0');
@@ -107,7 +116,7 @@ describe('App integration: mouse actions', () => {
   });
 
   it('new game resets all cells to hidden', async () => {
-    render(<App />);
+    renderGame();
     const cell = screen.getByTestId('cell-4-4');
 
     fireEvent.mouseDown(cell, { button: 0, buttons: 1 });
@@ -122,7 +131,7 @@ describe('App integration: mouse actions', () => {
   });
 
   it('shows "Ready" status before first reveal', () => {
-    render(<App />);
+    renderGame();
     expect(screen.getByTestId('game-status')).toHaveTextContent('Ready');
   });
 });

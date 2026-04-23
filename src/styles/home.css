@@ -1,0 +1,394 @@
+/* ================================================================
+   Home page — retro CRT arcade aesthetic
+   Tokens come from theme.css :root.
+   ================================================================ */
+
+/* ---------- Page shell ---------- */
+
+.home {
+  position: relative;
+  min-height: 100vh;
+  background: var(--surface);
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+/* ---------- CRT overlay effects ---------- */
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ---------- Decorative grid behind hero ---------- */
+
+.deco-grid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.deco-cell {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--neon-dim);
+  border: 1px solid rgba(51, 255, 51, 0.1);
+  animation: cellPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes cellPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* ---------- Title ---------- */
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.title-pxl {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 700;
+  color: var(--neon);
+  text-shadow:
+    0 0 20px var(--neon-glow),
+    0 0 60px rgba(51, 255, 51, 0.2),
+    0 4px 0 #0a3a0a;
+  letter-spacing: 0.15em;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+.title-sweeper {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+@keyframes glowPulse {
+  0% {
+    text-shadow:
+      0 0 20px var(--neon-glow),
+      0 0 60px rgba(51, 255, 51, 0.2),
+      0 4px 0 #0a3a0a;
+  }
+  100% {
+    text-shadow:
+      0 0 30px var(--neon-glow),
+      0 0 80px rgba(51, 255, 51, 0.35),
+      0 0 120px rgba(51, 255, 51, 0.1),
+      0 4px 0 #0a3a0a;
+  }
+}
+
+/* ---------- Tagline ---------- */
+
+.hero-tagline {
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: var(--text-muted);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.blink {
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ---------- Play button ---------- */
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--surface);
+  background: var(--neon);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow:
+    0 0 20px var(--neon-glow),
+    0 4px 0 #1a8a1a,
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 30px var(--neon-glow),
+    0 0 60px rgba(51, 255, 51, 0.2),
+    0 6px 0 #1a8a1a,
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.play-btn:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 15px var(--neon-glow),
+    0 2px 0 #1a8a1a,
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.play-btn:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 4px;
+}
+
+.play-btn-icon {
+  font-size: 0.8em;
+}
+
+/* ---------- Section headings ---------- */
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  color: var(--neon);
+  text-align: center;
+  margin: 0 0 2rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 12px var(--neon-glow);
+}
+
+/* ---------- Difficulty cards ---------- */
+
+.difficulties {
+  padding: 4rem 1.5rem;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.diff-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.diff-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.diff-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 2px solid transparent;
+  pointer-events: none;
+  transition: border-color 0.2s;
+}
+
+.diff-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--neon);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px var(--neon-dim);
+}
+
+.diff-card:hover::before {
+  border-color: var(--neon);
+}
+
+.diff-card:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 4px;
+}
+
+.diff-emoji {
+  font-size: 1.8rem;
+}
+
+.diff-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.diff-stats {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--neon);
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px var(--neon-dim);
+}
+
+.diff-desc {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin: 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ---------- Controls preview ---------- */
+
+.controls-preview {
+  padding: 3rem 1.5rem 4rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.control-group {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+}
+
+.control-group-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--amber);
+  margin: 0 0 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.control-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.control-list kbd {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-bottom: 2px solid var(--border-subtle);
+  padding: 0.15rem 0.5rem;
+  margin-right: 0.5rem;
+  min-width: 4rem;
+  text-align: center;
+}
+
+/* ---------- Footer ---------- */
+
+.home-footer {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.home-footer p {
+  margin: 0;
+}
+
+.footer-pixel {
+  color: var(--neon);
+  margin-left: 0.25rem;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .controls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .deco-grid {
+    display: none;
+  }
+}

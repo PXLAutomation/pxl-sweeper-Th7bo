@@ -1,27 +1,75 @@
 /* ================================================================
-   PXL Sweeper — pixel-art visual theme
-   All layout + visuals in one file; palette lives in theme.css.
+   PXL Sweeper — Game page styles
+   Uses shared tokens from theme.css. Design language matches home.css.
    ================================================================ */
 
-/* ---------- App shell ---------- */
+/* ---------- Game page shell ---------- */
 
-.app {
-  font-family: var(--font-pixel);
-  font-size: 10px;
-  max-width: fit-content;
-  margin: 0 auto;
-  padding: 24px 24px 16px;
+.game-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(51, 255, 51, 0.04) 0%, transparent 50%),
+    var(--surface);
+  overflow-x: auto;
 }
 
-h1 {
-  text-align: center;
-  margin: 0 0 16px;
-  font-size: 18px;
-  letter-spacing: 3px;
-  color: var(--led-on);
-  text-shadow:
-    0 0 8px rgba(51, 255, 51, 0.5),
-    0 2px 0 rgba(0, 0, 0, 0.6);
+/* ---------- Top bar ---------- */
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+  flex-shrink: 0;
+}
+
+.game-back {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.game-back:hover {
+  color: var(--neon);
+  border-color: var(--border-subtle);
+}
+
+.game-back:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.game-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0;
+  color: var(--neon);
+  text-shadow: 0 0 12px var(--neon-glow);
+}
+
+/* ---------- Main area ---------- */
+
+.game-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 3rem;
+  gap: 1.25rem;
 }
 
 /* ---------- HUD ---------- */
@@ -29,112 +77,127 @@ h1 {
 .hud {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 10px;
-  margin-bottom: 4px;
-  background: var(--hud-bg);
-  border: 3px solid;
-  border-color: var(--frame-light) var(--frame-dark) var(--frame-dark) var(--frame-light);
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 1.1rem 1.5rem;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   flex-wrap: wrap;
+  max-width: max-content;
 }
 
 .hud-counter {
   display: flex;
-  gap: 6px;
-  align-items: center;
-  background: var(--led-bg);
-  padding: 5px 8px;
-  border: 2px solid;
-  border-color: var(--led-panel-border-dark) var(--led-panel-border-light) var(--led-panel-border-light) var(--led-panel-border-dark);
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.5rem 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
 }
 
 .hud-label {
-  font-family: var(--font-pixel);
-  font-size: 8px;
-  color: #667;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--text-muted);
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .hud-value {
-  font-family: var(--font-mono);
-  font-weight: bold;
-  font-size: 20px;
-  min-width: 3ch;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.35rem;
+  min-width: 2.5ch;
   text-align: right;
-  color: var(--led-on);
-  text-shadow: 0 0 6px rgba(51, 255, 51, 0.6);
+  color: var(--neon);
+  text-shadow: 0 0 8px var(--neon-dim);
 }
 
 .hud-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 0.4rem;
 }
 
 .hud-status {
   margin: 0;
-  font-family: var(--font-pixel);
-  font-size: 8px;
-  color: var(--btn-text);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 .hud-new-game {
-  font-family: var(--font-pixel);
-  font-size: 9px;
-  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding: 0.55rem 1.2rem;
   cursor: pointer;
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: 3px solid;
-  border-color: var(--btn-light) var(--btn-dark) var(--btn-dark) var(--btn-light);
-  transition: background 0.08s;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  letter-spacing: 0.05em;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .hud-new-game:hover {
-  background: var(--btn-hover-bg);
+  background: var(--surface-card);
+  border-color: var(--neon);
+  color: var(--neon);
 }
 
 .hud-new-game:active {
-  border-color: var(--btn-dark) var(--btn-light) var(--btn-light) var(--btn-dark);
+  background: var(--surface);
+}
+
+.hud-new-game:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
 }
 
 /* ---------- Difficulty ---------- */
 
 .difficulty-select {
   display: flex;
-  gap: 4px;
+  gap: 0.35rem;
 }
 
 .difficulty-btn {
-  font-family: var(--font-pixel);
-  font-size: 7px;
-  padding: 5px 8px;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  padding: 0.5rem 0.85rem;
   cursor: pointer;
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: 2px solid;
-  border-color: var(--btn-light) var(--btn-dark) var(--btn-dark) var(--btn-light);
-  transition: background 0.08s;
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  letter-spacing: 0.03em;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .difficulty-btn:hover {
-  background: var(--btn-hover-bg);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
 }
 
-.difficulty-btn:active {
-  border-color: var(--btn-dark) var(--btn-light) var(--btn-light) var(--btn-dark);
+.difficulty-btn:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
 }
 
 .difficulty-btn-active {
-  background: var(--btn-active-bg);
-  color: var(--btn-active-text);
-  border-color: #7070dd #3838aa #3838aa #7070dd;
+  background: var(--neon);
+  color: var(--surface);
+  border-color: var(--neon);
 }
 
 .difficulty-btn-active:hover {
-  background: #6262d8;
+  background: #44ff44;
+}
+
+/* ---------- Board stage ---------- */
+
+.board-stage {
+  display: flex;
+  justify-content: center;
 }
 
 /* ---------- Board ---------- */
@@ -142,15 +205,17 @@ h1 {
 .board {
   display: inline-flex;
   flex-direction: column;
-  padding: 3px;
-  background: var(--frame-bg);
-  border: 3px solid;
-  border-color: var(--frame-light) var(--frame-dark) var(--frame-dark) var(--frame-light);
+  padding: 4px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   user-select: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px var(--neon-dim);
 }
 
 .board:focus {
   outline: none;
+  border-color: var(--neon);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 32px var(--neon-dim);
 }
 
 .board-row {
@@ -161,18 +226,17 @@ h1 {
 
 .cell {
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   padding: 0;
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 22px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 34px;
   text-align: center;
   cursor: pointer;
   border: none;
-  image-rendering: pixelated;
 }
 
 .cell:focus {
@@ -183,24 +247,24 @@ h1 {
 
 .cell[data-state='hidden'] {
   background: var(--cell-hidden);
-  border: 3px solid;
+  border: 2px solid;
   border-color: var(--cell-hidden-light) var(--cell-hidden-dark) var(--cell-hidden-dark) var(--cell-hidden-light);
 }
 
 .cell[data-state='flagged'] {
   background: var(--cell-hidden);
-  border: 3px solid;
+  border: 2px solid;
   border-color: var(--cell-hidden-light) var(--cell-hidden-dark) var(--cell-hidden-dark) var(--cell-hidden-light);
   color: var(--color-flag);
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .cell[data-state='wrong-flag'] {
   background: var(--cell-hidden);
-  border: 3px solid;
+  border: 2px solid;
   border-color: var(--cell-hidden-light) var(--cell-hidden-dark) var(--cell-hidden-dark) var(--cell-hidden-light);
   color: var(--color-wrong);
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .cell[data-state='revealed-empty'] {
@@ -229,7 +293,7 @@ h1 {
   border: 1px solid var(--cell-revealed-border);
   color: var(--color-mine);
   cursor: default;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .cell[data-state='mine-exploded'] {
@@ -237,48 +301,62 @@ h1 {
   border: 1px solid var(--cell-revealed-border);
   color: #fff;
   cursor: default;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* ---------- Focus indicator ---------- */
 
 .board:focus .cell[data-focused] {
-  outline: 2px solid var(--color-focus);
+  outline: 2px solid var(--amber);
   outline-offset: -2px;
   z-index: 1;
-  box-shadow: 0 0 4px rgba(255, 200, 0, 0.5);
+  box-shadow: 0 0 6px rgba(255, 184, 48, 0.5);
 }
 
 /* ---------- Shortcuts help ---------- */
 
 .shortcuts-help {
-  margin-top: 14px;
-  font-family: var(--font-pixel);
-  font-size: 7px;
-  color: #556;
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  max-width: max-content;
 }
 
 .shortcuts-help summary {
   cursor: pointer;
-  color: #778;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
 }
 
 .shortcuts-help summary:hover {
-  color: var(--btn-text);
+  color: var(--text-primary);
+}
+
+.shortcuts-help summary:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
 }
 
 .shortcuts-help ul {
-  margin: 6px 0 0;
-  padding-left: 18px;
-  line-height: 2.2;
+  margin: 0.6rem 0 0;
+  padding-left: 1.2rem;
+  line-height: 2;
 }
 
 .shortcuts-help kbd {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: 1px solid var(--btn-light);
-  border-radius: 2px;
-  padding: 1px 5px;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-bottom: 2px solid var(--border-subtle);
+  padding: 0.1rem 0.4rem;
+  margin-right: 0.4rem;
+  min-width: 3.5rem;
+  text-align: center;
 }
