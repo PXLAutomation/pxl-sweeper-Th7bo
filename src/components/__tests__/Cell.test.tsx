@@ -43,47 +43,62 @@ describe('getCellVisualState', () => {
 
 describe('Cell component', () => {
   it('renders a hidden cell with empty text', () => {
-    render(<Cell cell={makeCell()} isExploded={false} gameStatus="playing" />);
+    render(<Cell cell={makeCell()} isExploded={false} isFocused={false} gameStatus="playing" />);
     const btn = screen.getByRole('button');
     expect(btn).toHaveAttribute('data-state', 'hidden');
     expect(btn).toHaveTextContent('');
   });
 
   it('renders a flagged cell with flag symbol', () => {
-    render(<Cell cell={makeCell({ state: 'flagged' })} isExploded={false} gameStatus="playing" />);
+    render(<Cell cell={makeCell({ state: 'flagged' })} isExploded={false} isFocused={false} gameStatus="playing" />);
     const btn = screen.getByRole('button');
     expect(btn).toHaveAttribute('data-state', 'flagged');
     expect(btn).toHaveTextContent('⚑');
   });
 
   it('renders a numbered cell with the digit', () => {
-    render(<Cell cell={makeCell({ state: 'revealed', adjacent: 3 })} isExploded={false} gameStatus="playing" />);
+    render(<Cell cell={makeCell({ state: 'revealed', adjacent: 3 })} isExploded={false} isFocused={false} gameStatus="playing" />);
     const btn = screen.getByRole('button');
     expect(btn).toHaveAttribute('data-state', 'number-3');
     expect(btn).toHaveTextContent('3');
   });
 
   it('renders an exploded mine cell', () => {
-    render(<Cell cell={makeCell({ state: 'revealed', mine: true })} isExploded={true} gameStatus="lost" />);
+    render(<Cell cell={makeCell({ state: 'revealed', mine: true })} isExploded={true} isFocused={false} gameStatus="lost" />);
     expect(screen.getByRole('button')).toHaveAttribute('data-state', 'mine-exploded');
   });
 
   it('renders wrong-flag on loss', () => {
-    render(<Cell cell={makeCell({ state: 'flagged', mine: false })} isExploded={false} gameStatus="lost" />);
+    render(<Cell cell={makeCell({ state: 'flagged', mine: false })} isExploded={false} isFocused={false} gameStatus="lost" />);
     const btn = screen.getByRole('button');
     expect(btn).toHaveAttribute('data-state', 'wrong-flag');
     expect(btn).toHaveTextContent('✗');
   });
 
   it('includes position in the aria-label', () => {
-    render(<Cell cell={makeCell({ row: 2, col: 5 })} isExploded={false} gameStatus="playing" />);
+    render(<Cell cell={makeCell({ row: 2, col: 5 })} isExploded={false} isFocused={false} gameStatus="playing" />);
     expect(screen.getByRole('button')).toHaveAttribute('aria-label', 'Hidden cell, row 3, column 6');
   });
 
   it('sets data-row and data-col attributes', () => {
-    render(<Cell cell={makeCell({ row: 4, col: 7 })} isExploded={false} gameStatus="playing" />);
+    render(<Cell cell={makeCell({ row: 4, col: 7 })} isExploded={false} isFocused={false} gameStatus="playing" />);
     const btn = screen.getByRole('button');
     expect(btn).toHaveAttribute('data-row', '4');
     expect(btn).toHaveAttribute('data-col', '7');
+  });
+
+  it('marks the focused cell with data-focused', () => {
+    render(<Cell cell={makeCell()} isExploded={false} isFocused={true} gameStatus="playing" />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-focused', 'true');
+  });
+
+  it('does not set data-focused on unfocused cell', () => {
+    render(<Cell cell={makeCell()} isExploded={false} isFocused={false} gameStatus="playing" />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-focused');
+  });
+
+  it('sets tabIndex to -1', () => {
+    render(<Cell cell={makeCell()} isExploded={false} isFocused={false} gameStatus="playing" />);
+    expect(screen.getByRole('button')).toHaveAttribute('tabindex', '-1');
   });
 });

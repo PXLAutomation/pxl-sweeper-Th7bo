@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { App } from '../../App';
@@ -140,9 +141,12 @@ describe('Board: chord detection via left+right click', () => {
         board={board}
         status="playing"
         explodedAt={null}
+        focus={{ row: 1, col: 1 }}
+        boardRef={createRef()}
         onReveal={vi.fn()}
         onToggleFlag={vi.fn()}
         onChord={onChord}
+        onMoveFocus={vi.fn()}
       />,
     );
 
@@ -167,9 +171,12 @@ describe('Board: chord detection via left+right click', () => {
         board={board}
         status="playing"
         explodedAt={null}
+        focus={{ row: 1, col: 1 }}
+        boardRef={createRef()}
         onReveal={onReveal}
         onToggleFlag={onToggleFlag}
         onChord={onChord}
+        onMoveFocus={vi.fn()}
       />,
     );
 
@@ -198,9 +205,12 @@ describe('Board: context menu', () => {
         board={board}
         status="playing"
         explodedAt={null}
+        focus={{ row: 1, col: 1 }}
+        boardRef={createRef()}
         onReveal={vi.fn()}
         onToggleFlag={vi.fn()}
         onChord={vi.fn()}
+        onMoveFocus={vi.fn()}
       />,
     );
 

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import type { Board as BoardType, GameStatus, Position } from '../engine/types';
 import { Cell } from './Cell';
 
@@ -6,9 +6,12 @@ interface BoardProps {
   board: BoardType;
   status: GameStatus;
   explodedAt: Position | null;
+  focus: Position;
+  boardRef: React.RefObject<HTMLDivElement | null>;
   onReveal: (row: number, col: number) => void;
   onToggleFlag: (row: number, col: number) => void;
   onChord: (row: number, col: number) => void;
+  onMoveFocus: (dr: number, dc: number) => void;
 }
 
 function getCellCoords(e: React.MouseEvent): { row: number; col: number } | null {
@@ -24,19 +27,31 @@ export function Board({
   board,
   status,
   explodedAt,
+  focus,
+  boardRef,
   onReveal,
   onToggleFlag,
   onChord,
+  onMoveFocus,
 }: BoardProps) {
   const chordPending = useRef(false);
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.buttons === 3) {
-      chordPending.current = true;
-    } else if (e.buttons === 1 || e.buttons === 2) {
-      chordPending.current = false;
-    }
-  }, []);
+  useEffect(() => {
+    boardRef.current?.focus();
+  }, [boardRef]);
+
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (e.buttons === 3) {
+        chordPending.current = true;
+      } else if (e.buttons === 1 || e.buttons === 2) {
+        chordPending.current = false;
+      }
+      e.preventDefault();
+      boardRef.current?.focus();
+    },
+    [boardRef],
+  );
 
   const handleMouseUp = useCallback(
     (e: React.MouseEvent) => {
@@ -69,15 +84,57 @@ export function Board({
     chordPending.current = false;
   }, []);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          onMoveFocus(-1, 0);
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          onMoveFocus(1, 0);
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          onMoveFocus(0, -1);
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          onMoveFocus(0, 1);
+          break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          onReveal(focus.row, focus.col);
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          onToggleFlag(focus.row, focus.col);
+          break;
+        case 'c':
+        case 'C':
+          e.preventDefault();
+          onChord(focus.row, focus.col);
+          break;
+      }
+    },
+    [focus, onMoveFocus, onReveal, onToggleFlag, onChord],
+  );
+
   return (
     <div
+      ref={boardRef}
       className="board"
       role="grid"
       aria-label="Minesweeper board"
+      tabIndex={0}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onContextMenu={handleContextMenu}
       onMouseLeave={handleMouseLeave}
+      onKeyDown={handleKeyDown}
     >
       {board.cells.map((row, r) => (
         <div key={r} className="board-row" role="row">
@@ -90,6 +147,7 @@ export function Board({
                 explodedAt.row === cell.row &&
                 explodedAt.col === cell.col
               }
+              isFocused={focus.row === cell.row && focus.col === cell.col}
               gameStatus={status}
             />
           ))}
