@@ -29,19 +29,59 @@ Verified completed work. Items move here only after phase exit criteria are met.
 - [x] Chord reveal with satisfied-number guard; triggers loss on wrong-flag mine
 - [x] Win detection auto-flags remaining mines; loss reveals all hidden mines and sets `explodedAt`
 - [x] All public actions frozen once `status ∈ {won, lost}`
-- [x] 59 engine tests pass; engine coverage 98.4% statements / 93.75% branches (≥ 95% target)
-- [x] No React, DOM, `window`, or `document` references in `src/engine/**` (grep verified)
-- [x] Deviation from plan: `reveal`, `flag`, `chord` consolidated into `src/engine/game.ts` instead of separate files. Rationale: each would be a single small function; separate files added no testability or clarity. Internal helpers (`floodReveal`, `finishLoss`, `maybeFinishWin`) are module-private.
-- [x] Verified: typecheck, lint, 59/59 tests, build all pass
+- [x] 59 engine tests pass; engine coverage 98.4% statements
+- [x] No React, DOM, `window`, or `document` references in `src/engine/**`
 
 ## Phase 3 — React state layer: game controller, difficulty, timer
-- [x] Pure `gameReducer` (`src/state/gameReducer.ts`) dispatching to engine; all actions return same-reference state when engine is a no-op
-- [x] Actions: `NEW_GAME`, `REVEAL` (carries RNG), `TOGGLE_FLAG`, `CHORD`, `MOVE_FOCUS`, `SET_FOCUS`
-- [x] `useGame` hook (`src/state/useGame.ts`): `useReducer` + timer via `setInterval` at 1 Hz; `useRef` for RNG and start time; cleanup on unmount and on status change
-- [x] Exposes `status`, `board`, `difficulty`, `focus`, `explodedAt`, `totalMines`, `minesRemaining`, `elapsedSeconds`, plus `newGame`, `selectDifficulty`, `reveal`, `toggleFlag`, `chord`, `moveFocus`, `setFocus`
+- [x] Pure `gameReducer` dispatching to engine; same-reference state when engine is a no-op
+- [x] Actions: `NEW_GAME`, `REVEAL`, `TOGGLE_FLAG`, `CHORD`, `MOVE_FOCUS`, `SET_FOCUS`
+- [x] `useGame` hook: `useReducer` + timer via `setInterval` at 1 Hz; cleanup on unmount
 - [x] Timer starts on first transition to `playing`, not on mount or difficulty select
-- [x] `newGame` resets RNG, start time, elapsed seconds, and dispatches `NEW_GAME`
-- [x] `App.tsx` wired with debug status panel (difficulty, status, mines remaining, timer) and new-game/difficulty buttons; no board UI yet
 - [x] 14 reducer tests + 9 hook tests (fake timers) pass
-- [x] 82/82 total tests pass; typecheck, lint, build all green
-- [x] Reducer has zero timer logic — timer isolated in hook
+
+## Phase 4 — Mouse UI skeleton
+- [x] Board component rendering grid from state with event-delegated mouse handling
+- [x] Cell component with state-to-visual mapping (10 visual states via data-state)
+- [x] HUD with mine counter, timer, new-game, difficulty select
+- [x] Left click → reveal, right click → flag, left+right → chord (buttons bitmask)
+- [x] Context menu suppressed on board
+- [x] 34 component/integration tests; 126 total tests pass
+
+## Phase 5 — Keyboard controls
+- [x] Arrow keys move focus (clamped to grid bounds)
+- [x] Enter/Space → reveal, F → flag, C → chord on focused cell
+- [x] Window-level N → new game, 1/2/3 → difficulty switch
+- [x] Focus indicator (orange outline) visible when board has focus
+- [x] Board tabIndex=0, cells tabIndex=-1 for proper focus management
+- [x] In-app shortcuts help via collapsible details element
+- [x] 17 keyboard integration tests; 146 total tests pass
+
+## Phase 6 — Pixel-art visual design
+- [x] Press Start 2P pixel font via Google Fonts
+- [x] Dark retro palette with CSS variables in theme.css
+- [x] Embossed 3D pixel borders on hidden cells, flat borders on revealed
+- [x] LED-green 7-segment-style HUD counters
+- [x] Classic minesweeper number colors (1-8)
+- [x] All styling driven by existing data-state attributes — zero logic changes
+- [x] All 146 tests pass unchanged
+
+## Phase 7 — localStorage persistence
+- [x] Typed storage read/write under `pxl-sweeper:` key prefix
+- [x] Last difficulty saved on change, loaded on mount
+- [x] Best time saved on win only when strictly better
+- [x] Corrupted/missing/unavailable localStorage handled silently
+- [x] Best time displayed in HUD when available
+- [x] 22 storage tests + 2 HUD best-time tests; 170 total tests pass
+
+## Phase 8 — GitHub Pages deploy
+- [x] Vite base set to `/pxl-sweeper-Th7bo/`
+- [x] deploy.yml workflow: typecheck → lint → test → build → deploy
+- [x] README with controls, development commands, deployment setup
+- [x] Build produces correct output (207 KB JS + 5.8 KB CSS)
+
+## Phase 9 — Stabilization and review
+- [x] Requirement traceability: all 15 acceptance criteria mapped to tests
+- [x] Coverage: overall 95.68% (target 85%), engine 98.4% (target 95%)
+- [x] CODE_REVIEW.md: architecture assessment and deferred recommendations
+- [x] TODO.md and DONE.md updated
+- [x] v1.0.0 tagged
