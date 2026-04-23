@@ -43,3 +43,13 @@
 - Extended automated coverage in [tests/ui/render.test.js](/home/th7bo/pxl-codex/tests/ui/render.test.js) and [tests/smoke.test.js](/home/th7bo/pxl-codex/tests/smoke.test.js) for the new UI semantics.
 - Verified `npm test` passes for all four automated suites.
 - Verified the served app in headless Chrome after JavaScript execution, confirming the live dashboard, accessibility/status markup, full board render, and clean asset loads with no favicon 404.
+
+## Phase 6: Prepare GitHub Pages deployment workflow
+
+- Added `npm run build` and `npm run preview` in [package.json](/home/th7bo/pxl-codex/package.json) for deployable artifact generation and local preview.
+- Added [scripts/build-pages.mjs](/home/th7bo/pxl-codex/scripts/build-pages.mjs) to create a minimal `dist/` output containing only the static site assets plus `.nojekyll`.
+- Added [.github/workflows/deploy-pages.yml](/home/th7bo/pxl-codex/.github/workflows/deploy-pages.yml) using the current GitHub Pages Actions flow with `actions/configure-pages@v5`, `actions/upload-pages-artifact@v4`, and `actions/deploy-pages@v4`.
+- Updated [IMPLEMENTATION_PLAN.md](/home/th7bo/pxl-codex/IMPLEMENTATION_PLAN.md) and [README.md](/home/th7bo/pxl-codex/README.md) to describe the deployment phase, build flow, preview command, and GitHub Pages setup steps.
+- Verified `npm test` passes after the deployment changes.
+- Verified `npm run build` produces `dist/index.html`, `dist/src/`, and `dist/.nojekyll`.
+- Verified the built `dist/` site renders correctly in headless Chrome when served locally from the preview command.

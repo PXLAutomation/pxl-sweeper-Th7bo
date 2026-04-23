@@ -4,8 +4,10 @@ A tiny static browser Minesweeper-style game built as a one-page JavaScript app.
 
 ## Commands
 
+- `npm run build` creates the deployable static artifact in `dist/`.
 - `npm test` runs the automated tests.
 - `npm start` serves the project locally at `http://localhost:4173`.
+- `npm run preview` serves the built `dist/` output at `http://localhost:4174`.
 
 ## Gameplay
 
@@ -44,3 +46,10 @@ A tiny static browser Minesweeper-style game built as a one-page JavaScript app.
 - Run `npm test` to execute the automated suites.
 - Run `npm start`, then open `http://localhost:4173`.
 - Confirm the board renders, tiles reveal, right-click flags, reset creates a fresh board, and win/loss states lock the board.
+
+## GitHub Pages Deployment
+
+- The repository includes [.github/workflows/deploy-pages.yml](/home/th7bo/pxl-codex/.github/workflows/deploy-pages.yml), which follows GitHub's current Pages Actions flow using `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages`.
+- `npm run build` prepares `dist/` so deployment uploads only the site assets instead of the whole repository.
+- On GitHub, open repository `Settings` -> `Pages` and ensure the source is GitHub Actions.
+- Push the deployment workflow to the default branch to trigger the first Pages deployment.

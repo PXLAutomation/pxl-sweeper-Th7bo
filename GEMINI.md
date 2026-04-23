@@ -39,9 +39,18 @@ Do not start a different project unless the project requirements explicitly chan
 
 - Run `npm test` after implementation changes.
 - When UI behavior changes, also verify the static page through `npm start` or an equivalent local static server.
+- When deployment files change, also verify `npm run build` and preview the built `dist/` output locally.
 - Treat runtime verification as part of done for user-facing changes, not optional follow-up.
 
 ## Current commands
 
+- `npm run build`
+- `npm run preview`
 - `npm test`
 - `npm start`
+
+## Deployment notes
+
+- GitHub Pages deployment is handled through `.github/workflows/deploy-pages.yml`.
+- The deployable artifact is `dist/`, created by `scripts/build-pages.mjs`.
+- Prefer deploying only built site assets, not the entire repository root.

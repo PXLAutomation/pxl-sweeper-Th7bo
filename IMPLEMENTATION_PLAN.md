@@ -26,6 +26,7 @@ The core engine and test harness are established first because Minesweeper logic
 - Phase 3: Add reveal, flag, and game-ending rules with engine tests
 - Phase 4: Build the one-page UI and connect engine interactions
 - Phase 5: Stabilize UX, docs, and release readiness
+- Phase 6: Prepare GitHub Pages deployment workflow
 
 ## Detailed Phases
 
@@ -345,6 +346,66 @@ Tighten the project for delivery by improving clarity, documentation, and releas
 - Final manual smoke checks pass for start, reveal, flag, win, loss, and reset flows.
 - `DONE.md` contains only verified completed work and `TODO.md` contains any remaining approved follow-up items.
 
+## Phase 6: Prepare GitHub Pages deployment workflow
+
+### Goal
+
+Add a minimal deployment path that publishes only the static site assets needed for GitHub Pages.
+
+### Scope
+
+- Add a repeatable local build step for a deployable static artifact.
+- Add a GitHub Actions workflow for GitHub Pages deployment.
+- Update docs for build, preview, and Pages setup.
+- Verify the generated deploy artifact locally.
+
+### Expected files to change
+
+- `package.json`
+- `scripts/build-pages.mjs`
+- `.github/workflows/deploy-pages.yml`
+- `README.md`
+- `TODO.md`
+- `DONE.md`
+
+### Dependencies
+
+- Depends on completion of Phase 5.
+- Requires the site to run as a plain static frontend with relative asset paths.
+
+### Risks
+
+- Low risk.
+- The main failure mode is deploying repository files that are not part of the actual site or wiring an outdated Pages workflow.
+
+### Tests and checks to run
+
+- `npm test`
+- `npm run build`
+- Manual smoke check of the built `dist/` output through a local static server
+
+### Review check before moving work to `DONE.md`
+
+- Confirm the build output contains only deployable site assets.
+- Confirm the workflow follows the current GitHub Pages Actions pattern rather than an obsolete branch hack.
+- Confirm docs describe the local build and preview path accurately.
+- Confirm deployment setup did not introduce backend or framework complexity.
+- Confirm any unresolved hosting steps that require GitHub UI configuration are written clearly rather than implied.
+
+### Exact `TODO.md` entries to refresh from this phase
+
+- [ ] Add a repeatable `npm run build` step that creates a deployable static artifact
+- [ ] Add a GitHub Pages Actions workflow that tests, builds, and deploys the site
+- [ ] Update docs with build, preview, and GitHub Pages setup steps
+- [ ] Verify the built `dist/` site locally after the build step
+
+### Exit criteria for moving items to `DONE.md`
+
+- `npm run build` creates a `dist/` directory with the site entry point and required assets.
+- The GitHub Pages workflow file exists and uses the current Pages Actions flow with configure, upload, and deploy steps.
+- The documentation explains how to build, preview, and enable Pages for the repository.
+- Automated tests still pass and the built site loads through a local static server.
+
 ## Dependency Notes
 
 - Phase 1 must complete before any implementation because it defines the shared commands and repo structure.
@@ -352,6 +413,7 @@ Tighten the project for delivery by improving clarity, documentation, and releas
 - Phase 3 must complete before UI wiring because reveal and state-transition rules are the highest-risk gameplay logic.
 - Phase 4 depends on stable engine APIs from Phases 2 and 3.
 - Phase 5 depends on a playable UI and should not be used to hide incomplete gameplay work.
+- Phase 6 depends on the completed static site and should remain limited to deployment plumbing rather than new gameplay features.
 
 ## Review Policy
 
