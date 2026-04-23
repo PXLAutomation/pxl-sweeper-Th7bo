@@ -5,6 +5,10 @@ import { App } from '../../App';
 import { Board } from '../Board';
 import type { Board as BoardType, Cell } from '../../engine/types';
 
+beforeEach(() => {
+  localStorage.clear();
+});
+
 function getCells() {
   return screen.getAllByTestId(/^cell-/);
 }

@@ -1,6 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { App } from '../../App';
 
+beforeEach(() => {
+  localStorage.clear();
+});
+
 function getBoard() {
   return screen.getByRole('grid');
 }

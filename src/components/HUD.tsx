@@ -6,6 +6,7 @@ interface HUDProps {
   elapsedSeconds: number;
   status: GameStatus;
   difficulty: Difficulty;
+  bestTime: number | undefined;
   onNewGame: () => void;
   onSelectDifficulty: (d: Difficulty) => void;
 }
@@ -28,6 +29,7 @@ export function HUD({
   elapsedSeconds,
   status,
   difficulty,
+  bestTime,
   onNewGame,
   onSelectDifficulty,
 }: HUDProps) {
@@ -56,6 +58,13 @@ export function HUD({
         <span className="hud-label">Time:</span>
         <span className="hud-value">{elapsedSeconds}</span>
       </div>
+
+      {bestTime !== undefined && (
+        <div className="hud-counter" data-testid="best-time">
+          <span className="hud-label">Best:</span>
+          <span className="hud-value">{bestTime}</span>
+        </div>
+      )}
 
       <DifficultySelect current={difficulty} onSelect={onSelectDifficulty} />
     </header>

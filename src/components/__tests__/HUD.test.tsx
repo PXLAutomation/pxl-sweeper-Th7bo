@@ -7,6 +7,7 @@ const base = {
   elapsedSeconds: 42,
   status: 'playing' as const,
   difficulty: 'beginner' as const,
+  bestTime: undefined as number | undefined,
   onNewGame: vi.fn(),
   onSelectDifficulty: vi.fn(),
 };
@@ -68,5 +69,15 @@ describe('HUD', () => {
     render(<HUD {...base} onSelectDifficulty={onSelect} />);
     await userEvent.click(screen.getByTestId('difficulty-expert'));
     expect(onSelect).toHaveBeenCalledWith('expert');
+  });
+
+  it('displays best time when available', () => {
+    render(<HUD {...base} bestTime={99} />);
+    expect(screen.getByTestId('best-time')).toHaveTextContent('99');
+  });
+
+  it('hides best time when not available', () => {
+    render(<HUD {...base} bestTime={undefined} />);
+    expect(screen.queryByTestId('best-time')).not.toBeInTheDocument();
   });
 });

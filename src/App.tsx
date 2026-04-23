@@ -1,15 +1,41 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGame } from './state/useGame';
 import { Board } from './components/Board';
 import { HUD } from './components/HUD';
+import {
+  loadLastDifficulty,
+  saveLastDifficulty,
+  loadBestTimes,
+  saveBestTimes,
+  maybeUpdateBestTime,
+} from './persistence/storage';
 import './styles/theme.css';
 import './styles/base.css';
 
 export function App() {
-  const game = useGame('beginner');
+  const [initialDifficulty] = useState(loadLastDifficulty);
+  const game = useGame(initialDifficulty);
   const boardRef = useRef<HTMLDivElement>(null);
   const difficultyRef = useRef(game.difficulty);
   difficultyRef.current = game.difficulty;
+
+  const [bestTimes, setBestTimes] = useState(loadBestTimes);
+
+  useEffect(() => {
+    saveLastDifficulty(game.difficulty);
+  }, [game.difficulty]);
+
+  const prevStatusRef = useRef(game.status);
+  useEffect(() => {
+    if (prevStatusRef.current !== 'won' && game.status === 'won') {
+      setBestTimes((prev) => {
+        const updated = maybeUpdateBestTime(prev, game.difficulty, game.elapsedSeconds);
+        if (updated !== prev) saveBestTimes(updated);
+        return updated;
+      });
+    }
+    prevStatusRef.current = game.status;
+  }, [game.status, game.difficulty, game.elapsedSeconds]);
 
   const { newGame, selectDifficulty } = game;
   useEffect(() => {
@@ -54,6 +80,7 @@ export function App() {
         elapsedSeconds={game.elapsedSeconds}
         status={game.status}
         difficulty={game.difficulty}
+        bestTime={bestTimes[game.difficulty]}
         onNewGame={() => game.newGame(game.difficulty)}
         onSelectDifficulty={game.selectDifficulty}
       />
