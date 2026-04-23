@@ -2,14 +2,6 @@
 
 Active execution queue. Refreshed from `IMPLEMENTATION_PLAN.md`.
 
-## Phase 3 — React state layer
-- [ ] Implement pure gameReducer dispatching to engine
-- [ ] Implement useGame hook with timer and lifecycle cleanup
-- [ ] Expose minesRemaining, elapsedSeconds, status, board, focus
-- [ ] Unit-test reducer
-- [ ] Test useGame with fake timers
-- [ ] Minimal App.tsx wiring with debug status display
-
 ## Phase 4 — Mouse UI skeleton
 - [ ] Implement Board component rendering grid from state
 - [ ] Implement Cell component with state-to-visual mapping

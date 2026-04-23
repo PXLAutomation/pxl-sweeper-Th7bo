@@ -33,3 +33,15 @@ Verified completed work. Items move here only after phase exit criteria are met.
 - [x] No React, DOM, `window`, or `document` references in `src/engine/**` (grep verified)
 - [x] Deviation from plan: `reveal`, `flag`, `chord` consolidated into `src/engine/game.ts` instead of separate files. Rationale: each would be a single small function; separate files added no testability or clarity. Internal helpers (`floodReveal`, `finishLoss`, `maybeFinishWin`) are module-private.
 - [x] Verified: typecheck, lint, 59/59 tests, build all pass
+
+## Phase 3 — React state layer: game controller, difficulty, timer
+- [x] Pure `gameReducer` (`src/state/gameReducer.ts`) dispatching to engine; all actions return same-reference state when engine is a no-op
+- [x] Actions: `NEW_GAME`, `REVEAL` (carries RNG), `TOGGLE_FLAG`, `CHORD`, `MOVE_FOCUS`, `SET_FOCUS`
+- [x] `useGame` hook (`src/state/useGame.ts`): `useReducer` + timer via `setInterval` at 1 Hz; `useRef` for RNG and start time; cleanup on unmount and on status change
+- [x] Exposes `status`, `board`, `difficulty`, `focus`, `explodedAt`, `totalMines`, `minesRemaining`, `elapsedSeconds`, plus `newGame`, `selectDifficulty`, `reveal`, `toggleFlag`, `chord`, `moveFocus`, `setFocus`
+- [x] Timer starts on first transition to `playing`, not on mount or difficulty select
+- [x] `newGame` resets RNG, start time, elapsed seconds, and dispatches `NEW_GAME`
+- [x] `App.tsx` wired with debug status panel (difficulty, status, mines remaining, timer) and new-game/difficulty buttons; no board UI yet
+- [x] 14 reducer tests + 9 hook tests (fake timers) pass
+- [x] 82/82 total tests pass; typecheck, lint, build all green
+- [x] Reducer has zero timer logic — timer isolated in hook
