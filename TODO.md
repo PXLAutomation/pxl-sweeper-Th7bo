@@ -2,23 +2,6 @@
 
 Active execution queue. Refreshed from `IMPLEMENTATION_PLAN.md`.
 
-## Phase 2 — Pure engine
-- [ ] Define engine types: Cell, Board, GameState, Difficulty, GameStatus
-- [ ] Add difficulty presets (Beginner, Intermediate, Expert)
-- [ ] Implement seedable RNG
-- [ ] Implement board creation and adjacency count
-- [ ] Implement deferred mine placement with first-click safe zone
-- [ ] Implement iterative flood reveal
-- [ ] Implement flag toggle with hidden-only guard
-- [ ] Implement chord reveal with satisfied-number guard
-- [ ] Implement win detection and auto-flag remaining mines
-- [ ] Implement loss detection with explodedAt marker
-- [ ] Guard reveal/flag/chord against won/lost status
-- [ ] Author engine unit tests including first-click safety edge cases
-- [ ] Author chord-reveal scenario tests
-- [ ] Author full-game integration scenarios against hand-authored fixtures
-- [ ] Verify engine coverage ≥ 95%
-
 ## Phase 3 — React state layer
 - [ ] Implement pure gameReducer dispatching to engine
 - [ ] Implement useGame hook with timer and lifecycle cleanup
